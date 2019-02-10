@@ -1,0 +1,53 @@
+html{
+	overflow: hidden;
+}
+@font-face{
+	font-family: TSCu_Comic;
+	src: url('./TSCu_Comic.ttf');
+}
+body{
+	background-color: #222;
+	box-sizing: border-box;
+	color: white;
+	font-size: 30px;
+	font-family: TSCu_Comic;
+}
+table{
+	display: inline-table;
+	text-align: center;
+	font-size: inherit;
+}
+td{
+	background-color: #999;
+	color: black;
+}
+.btn{
+	outline: white solid 2px;
+	transition: background-color 1s;
+	padding: 10px;
+}
+.btn:hover{
+	background-color: rgb(150,150,150);
+}
+.b1{
+	margin: 5px;
+	display: inline-block;
+	transition: margin-left 1s,background-color 1s;
+}
+.b1:hover{
+	margin-left: 100px;
+}
+.frm{
+	text-align: center;
+	width: 100%;
+	margin-top: 5%;
+}
+.nf-enter-active{
+	transition: transform 1s;
+}
+.nf-enter{
+	transform: scale(0);
+}
+.nf-enter-to{
+	transform: scale(1);
+}

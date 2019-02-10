@@ -1,0 +1,71 @@
+<html>
+	<head>
+		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+		<meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
+		<script src="vue.min.js"></script>
+		<link rel="stylesheet"href="a.css"/>
+		<script src="a.js"></script>
+	</head>
+	<body onunload="backup()">
+		<div id="app">
+			<transition name="nf">
+				<div class="frm"v-show="ps=='menu'">
+					<h1>N Square Minus One</h1>
+					<div class="btn b1":style="{width:wbtn}"@click="initGame();ps='game'">Start</div><br/>
+					<div class="btn b1":style="{width:wbtn}"@click="ps='settings'">Settings</div>
+				</div>
+			</transition>
+			<transition name="nf">
+				<div class="frm"v-show="ps=='game'">
+					<div style="height:50px">
+						<span class="btn"@click="ps='menu'">Back</span>
+						<span class="btn"@click="initGame()">Restart</span>
+					</div>
+					<table :style="{width:wd,height:wd}">
+						<tr v-for="i of Number(n)":style="{height:ew}">
+							<td v-for="j of Number(n)"@click="move(i-1,j-1)":style="{width:ew}">
+								{{calc(i-1,j-1)}}
+							</td>
+						</tr>
+					</table>
+				</div>
+			</transition>
+			<transition name="nf">
+				<div class="frm"v-show="ps=='settings'">
+					<div style="height:50px">
+						<span class="btn"@click="ps='menu'">Back</span>
+					</div>
+					<input v-model="n"/>
+				</div>
+			</transition>
+		</div>
+		<script>
+			var data=localStorage.vm?JSON.parse(localStorage.vm):null;
+			var vm=new Vue({
+				el:'#app',
+				data:data || {
+					ps:'menu',
+					n:3,
+					a:[],
+					wd:'300px',
+					wbtn:'33%'
+				},
+				computed:{
+					ew:function(){
+						return Math.floor(100/this.n+1e-6)+'px';
+					}
+				},
+				methods:{
+					calc:function(i,j){
+						var ans=this.a[i*this.n+j];
+						return ans?ans:'';
+					}
+				}
+			})
+			with (document.documentElement){
+				var flag=clientWidth<clientHeight
+				vm.wbtn=flag?'80%':'33%'
+			}
+		</script>
+	</body>
+</html>
