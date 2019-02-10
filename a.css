@@ -9,15 +9,15 @@ body{
 	background-color: #222;
 	box-sizing: border-box;
 	color: white;
-	font-size: 30px;
+	font-size: 25px;
 	font-family: TSCu_Comic;
 }
-table{
+table.gt{
 	display: inline-table;
 	text-align: center;
 	font-size: inherit;
 }
-td{
+td.tile{
 	background-color: #999;
 	color: black;
 }
