@@ -16,8 +16,8 @@ function check(){
 		if (vm.a[i]!=i+1) return false
 	return true
 }
-function move(i,j){
-	if (vm.gs==2) return
+function move(i,j,flag){
+	if (vm.gs==2 && !flag) return
 	if (vm.gs==0){
 		setTimeout(tick,1000)
 		vm.gs=1
@@ -43,7 +43,7 @@ function initGame(flag){
 	if (!flag){
 		vm.a=range(1,vm.n*vm.n).concat(0)
 		for (var p=0; p<100*vm.n*vm.n; ++p){
-			move(randint(0,vm.n),randint(0,vm.n))
+			move(randint(0,vm.n),randint(0,vm.n),1)
 		}
 		vm.b=Array.from(vm.a)
 	}
