@@ -27,10 +27,10 @@ function initGame(){
 	}
 }
 function backup(flag){
-	if (!flag && document.visibilityState!='hidden') return;
+	if (!flag && document.visibilityState!='hidden') return
 	if (location.href.indexOf('#clearcache')!=-1){
-		localStorage.removeItem('vm');
-		return;
+		localStorage.removeItem('vm')
+		return
 	}
-	localStorage.vm=JSON.stringify(vm._data);
+	localStorage.vm=JSON.stringify(vm._data)
 }

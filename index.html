@@ -40,7 +40,7 @@
 			</transition>
 		</div>
 		<script>
-			var data=localStorage.vm?JSON.parse(localStorage.vm):null;
+			var data=localStorage.vm?JSON.parse(localStorage.vm):null
 			var vm=new Vue({
 				el:'#app',
 				data:data || {
@@ -52,13 +52,13 @@
 				},
 				computed:{
 					ew:function(){
-						return Math.floor(100/this.n+1e-6)+'px';
+						return Math.floor(100/this.n+1e-6)+'px'
 					}
 				},
 				methods:{
 					calc:function(i,j){
-						var ans=this.a[i*this.n+j];
-						return ans?ans:'';
+						var ans=this.a[i*this.n+j]
+						return ans?ans:''
 					}
 				}
 			})
@@ -66,6 +66,7 @@
 				var flag=clientWidth<clientHeight
 				vm.wbtn=flag?'80%':'33%'
 			}
+			document.addEventListener('visibilitychange',backup)
 		</script>
 	</body>
 </html>
