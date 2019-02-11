@@ -36,7 +36,7 @@
 					</div>
 					<table class="gt":style="{width:wd,height:wd}">
 						<tr v-for="i of Number(n)":style="{height:ew}">
-							<td class="tile"v-for="j of Number(n)"@click="move(i-1,j-1)":style="{width:ew}">
+							<td class="tile"v-for="j of Number(n)"@click="move(i-1,j-1)":style="{width:ew,transform:'scale('+(a[(i-1)*n+j-1]?1:0)+')'}">
 								{{calc(i-1,j-1)}}
 							</td>
 						</tr>
@@ -84,6 +84,9 @@
 				vm.wbtn=flag?'80%':'33%'
 			}
 			document.addEventListener('visibilitychange',backup)
+			document.addEventListener('touchmove',function(e){
+				e.preventDefault()
+			},{passive:0})
 		</script>
 	</body>
 </html>

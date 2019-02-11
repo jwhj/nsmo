@@ -20,6 +20,7 @@ table.gt{
 td.tile{
 	background-color: #999;
 	color: black;
+	transition: transform 0.3s;
 }
 .btn{
 	outline: white solid 2px;
