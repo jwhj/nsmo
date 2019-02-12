@@ -16,7 +16,7 @@ function check(){
 		if (vm.a[i]!=i+1) return false
 	return true
 }
-function move(i,j,flag){
+function _move(i,j,flag){
 	if (vm.gs==2 && !flag) return
 	if (vm.gs==0){
 		setTimeout(tick,1000)
@@ -38,6 +38,20 @@ function move(i,j,flag){
 			}
 		}
 	}
+}
+function move(x,y,flag){
+	for (var i=0; i<vm.n; ++i)
+		if (!vm.a[i*vm.n+y]){
+			if (i<x) for (var u=i+1; u<=x; ++u) _move(u,y,flag)
+			else if (i>x) for (var u=i-1; u>=x; --u) _move(u,y,flag)
+			return
+		}
+	for (var j=0; j<vm.n; ++j)
+		if (!vm.a[x*vm.n+j]){
+			if (j<y) for (var v=j+1; v<=y; ++v) _move(x,v,flag)
+			else if (j>y) for (var v=j-1; v>=y; --v) _move(x,v,flag)
+			return
+		}
 }
 function initGame(flag){
 	if (!flag){

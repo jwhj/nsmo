@@ -12,6 +12,9 @@ body{
 	font-size: 25px;
 	font-family: TSCu_Comic;
 }
+#app{
+	height: 100%;
+}
 table.gt{
 	display: inline-table;
 	text-align: center;
@@ -20,7 +23,7 @@ table.gt{
 td.tile{
 	background-color: #999;
 	color: black;
-	transition: transform 0.3s;
+	transition: opacity 0.6s;
 }
 .btn{
 	outline: white solid 2px;
