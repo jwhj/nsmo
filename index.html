@@ -6,7 +6,7 @@
 		<link rel="stylesheet"href="a.css"/>
 		<script src="a.js"></script>
 	</head>
-	<body onunload="backup(1)">
+	<body>
 		<div id="app"@touchmove.prevent>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='menu'">
@@ -35,8 +35,8 @@
 						</table>
 					</div>
 					<table class="gt":style="{width:wd,height:wd}">
-						<tr v-for="i of Number(n)":style="{height:ew}">
-							<td class="tile"v-for="j of Number(n)"@click="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
+						<tr v-for="i of n":style="{height:ew}">
+							<td class="tile"v-for="j of n"@click="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
 								{{calc(i-1,j-1)}}
 							</td>
 						</tr>
@@ -48,17 +48,16 @@
 					<div style="height:50px">
 						<span class="btn"@click="ps='menu'">Back</span>
 					</div>
-					<input v-model="n"/>
+					<input v-model.number="n"@change="saveConfig"/>
 				</div>
 			</transition>
 		</div>
 		<script>
-			var data=localStorage.vm?JSON.parse(localStorage.vm):null
 			var vm=new Vue({
 				el:'#app',
-				data:data || {
+				data:{
 					ps:'menu',
-					n:3,
+					n:Number(localStorage.n) || 3,
 					a:[],
 					b:[],
 					stp:0,
@@ -83,7 +82,6 @@
 				var flag=clientWidth<clientHeight
 				vm.wbtn=flag?'80%':'33%'
 			}
-			document.addEventListener('visibilitychange',backup)
 		</script>
 	</body>
 </html>
