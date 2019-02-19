@@ -7,13 +7,13 @@ html{
 }
 body{
 	background-color: #222;
-	box-sizing: border-box;
 	color: white;
 	font-size: 25px;
 	font-family: TSCu_Comic;
 }
 #app{
-	height: 100%;
+	height: 95%;
+	box-sizing: border-box;
 }
 table.gt{
 	display: inline-table;
