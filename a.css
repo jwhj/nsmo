@@ -29,13 +29,13 @@ td.tile{
 	outline: white solid 2px;
 	transition: background-color 1s;
 	padding: 10px;
+	display: inline-block;
+	margin: 5px;
 }
 .btn:hover{
 	background-color: rgb(150,150,150);
 }
 .b1{
-	margin: 5px;
-	display: inline-block;
 	transition: margin-left 1s,background-color 1s;
 }
 .b1:hover{

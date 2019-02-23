@@ -17,11 +17,9 @@
 			</transition>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='game'">
-					<div style="height:50px">
-						<span class="btn"@click="ps='menu'">Back</span>
-						<span class="btn"@click="initGame(1)">Restart</span>
-						<span class="btn"@click="initGame()">New Game</span>
-					</div>
+					<span class="btn"@click="ps='menu'">Back</span>
+					<span class="btn"@click="initGame(1)">Restart</span>
+					<span class="btn"@click="initGame()">New Game</span>
 					<div style="height:10%;margin:3px">
 						<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
 							<tr>
@@ -45,9 +43,7 @@
 			</transition>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='settings'">
-					<div style="height:50px">
-						<span class="btn"@click="ps='menu'">Back</span>
-					</div>
+					<span class="btn"@click="ps='menu'">Back</span><br/>
 					<input v-model.number="n"@change="saveConfig"/>
 				</div>
 			</transition>
