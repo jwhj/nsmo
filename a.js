@@ -7,7 +7,7 @@ function randint(a,b){
 	return Math.floor(Math.random()*(b-a)+a+1e-6)
 }
 function tick(){
-	if (vm.gs!=1) return
+	if (vm.gs!=1 || vm.ps!='game') return
 	++vm.tm
 	setTimeout(tick,1000)
 }
@@ -33,6 +33,13 @@ function _move(i,j,flag){
 				++vm.stp
 				if (check()){
 					vm.gs=2
+					var rec=JSON.parse(localStorage.rec || '{}')
+					if (rec[vm.n]){
+						rec[vm.n].m=Math.min(rec[vm.n].m,vm.stp)
+						rec[vm.n].t=Math.min(rec[vm.n].t,vm.tm)
+					}
+					else rec[vm.n]={m:vm.stp,t:vm.tm}
+					localStorage.rec=JSON.stringify(rec)
 				}
 				return
 			}

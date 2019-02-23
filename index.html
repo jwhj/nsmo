@@ -12,6 +12,7 @@
 				<div class="frm"v-show="ps=='menu'">
 					<h1>N Squared Minus One</h1>
 					<div class="btn b1":style="{width:wbtn}"@click="initGame();ps='game'">Start</div><br/>
+					<div class="btn b1":style="{width:wbtn}"@click="loadRec();ps='statistics'">Statistics</div><br/>
 					<div class="btn b1":style="{width:wbtn}"@click="ps='settings'">Settings</div>
 				</div>
 			</transition>
@@ -42,6 +43,21 @@
 				</div>
 			</transition>
 			<transition name="nf">
+				<div class="frm"v-show="ps=='statistics'">
+					<span class="btn"@click="ps='menu'">Back</span>
+					<table style="margin:auto;font-size:inherit;width:300px;text-align:center">
+						<tr>
+							<td style="width:70%">Least Move(s)</td>
+							<td>{{recMove}}</td>
+						</tr>
+						<tr>
+							<td>Minimum Time</td>
+							<td>{{recTime}}</td>
+						</tr>
+					</table>
+				</div>
+			</transition>
+			<transition name="nf">
 				<div class="frm"v-show="ps=='settings'">
 					<span class="btn"@click="ps='menu'">Back</span><br/>
 					<input v-model.number="n"@change="saveConfig"/>
@@ -59,6 +75,8 @@
 					stp:0,
 					tm:0,
 					gs:0,
+					recMove:'',
+					recTime:'',
 					wd:'300px',
 					wbtn:'33%'
 				},
@@ -71,6 +89,16 @@
 					calc:function(i,j){
 						var ans=this.a[i*this.n+j]
 						return ans?ans:''
+					},
+					loadRec:function(){
+						this.recMove=this.recTime='Emm...'
+						if (localStorage.rec){
+							var rec=JSON.parse(localStorage.rec)
+							if (rec[this.n]){
+								this.recMove=rec[this.n].m
+								this.recTime=rec[this.n].t
+							}
+						}
 					}
 				}
 			})
