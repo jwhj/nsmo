@@ -31,7 +31,7 @@ function _move(i,j,flag){
 				Vue.set(vm.a,y,vm.a[x])
 				Vue.set(vm.a,x,0)
 				++vm.stp
-				if (check()){
+				if (!flag && check()){
 					vm.gs=2
 					var rec=JSON.parse(localStorage.rec || '{}')
 					if (rec[vm.n]){
