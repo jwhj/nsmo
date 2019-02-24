@@ -107,6 +107,8 @@
 				var flag=clientWidth<clientHeight
 				vm.wbtn=flag?'80%':'33%'
 			}
+			if ('serviceWorker' in navigator)
+				navigator.serviceWorker.register('sw.js')
 		</script>
 	</body>
 </html>
