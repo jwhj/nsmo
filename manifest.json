@@ -1,0 +1,6 @@
+{
+	"short_name":"nsmo",
+	"start_url":"/",
+    "display": "standalone",
+	"orientation": "portrait-primary"
+}
