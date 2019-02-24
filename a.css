@@ -30,7 +30,7 @@ td.tile{
 	transition: background-color 1s;
 	padding: 7px 10px;
 	display: inline-block;
-	margin: 5px;
+	margin: 5px 1px;
 }
 .btn:hover{
 	background-color: rgb(150,150,150);

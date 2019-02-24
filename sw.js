@@ -1,4 +1,4 @@
-var cacheName="blabla"
+var cacheName="qaq"
 var cacheFiles=[
 	'/',
 	'index.html',
