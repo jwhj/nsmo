@@ -3,7 +3,7 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
 		<link rel="manifest" href="manifest.json">
-		<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
+		<script src="https://cdn.bootcss.com/fasttouchend/1.0.6/fasttouchend.min.js"></script>
 		<script src="vue.min.js"></script>
 		<link rel="stylesheet"href="a.css"/>
 		<script src="a.js"></script>
@@ -13,16 +13,16 @@
 			<transition name="nf">
 				<div class="frm"v-show="ps=='menu'">
 					<h1>N Squared Minus One</h1>
-					<div class="btn b1":style="{width:wbtn}"@click="initGame();ps='game'">Start</div><br/>
-					<div class="btn b1":style="{width:wbtn}"@click="loadRec();ps='statistics'">Statistics</div><br/>
-					<div class="btn b1":style="{width:wbtn}"@click="ps='settings'">Settings</div>
+					<div class="btn b1":style="{width:wbtn}"@touchend="initGame();ps='game'">Start</div><br/>
+					<div class="btn b1":style="{width:wbtn}"@touchend="loadRec();ps='statistics'">Statistics</div><br/>
+					<div class="btn b1":style="{width:wbtn}"@touchend="ps='settings'">Settings</div>
 				</div>
 			</transition>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='game'">
-					<span class="btn"@click="ps='menu'">Back</span>
-					<span class="btn"@click="initGame(1)">Restart</span>
-					<span class="btn"@click="initGame()">New Game</span>
+					<span class="btn"@touchend="ps='menu'">Back</span>
+					<span class="btn"@touchend="initGame(1)">Restart</span>
+					<span class="btn"@touchend="initGame()">New Game</span>
 					<div style="height:10%;margin:3px">
 						<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
 							<tr>
@@ -37,7 +37,7 @@
 					</div>
 					<table class="gt":style="{width:wd,height:wd}">
 						<tr v-for="i of n":style="{height:ew}">
-							<td class="tile"v-for="j of n"@click="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
+							<td class="tile"v-for="j of n"@touchend="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
 								{{calc(i-1,j-1)}}
 							</td>
 						</tr>
@@ -46,7 +46,7 @@
 			</transition>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='statistics'">
-					<span class="btn"@click="ps='menu'">Back</span>
+					<span class="btn"@touchend="ps='menu'">Back</span>
 					<table style="margin:auto;font-size:inherit;width:300px;text-align:center">
 						<tr>
 							<td style="width:70%">Least Move(s)</td>
@@ -61,7 +61,7 @@
 			</transition>
 			<transition name="nf">
 				<div class="frm"v-show="ps=='settings'">
-					<span class="btn"@click="ps='menu'">Back</span><br/>
+					<span class="btn"@touchend="ps='menu'">Back</span><br/>
 					<input v-model.number="n"@change="saveConfig"/>
 				</div>
 			</transition>
