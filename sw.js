@@ -1,6 +1,6 @@
-var cacheName="qwq"
+var cacheName="qaq"
 var cacheFiles=[
-	'/',
+	'./',
 	'index.html',
 	'a.js',
 	'vue.min.js',
@@ -15,9 +15,11 @@ self.addEventListener('install',e=>{
 	e.waitUntil(cachePromise)
 })
 self.addEventListener('fetch',e=>{
+	console.log(e.request)
 	e.respondWith(
 		caches.match(e.request).then(cache=>{
 			console.log('Cached')
+			console.log(cache)
 			return cache || fetch(e.request)
 		}).catch(err=>{
 			console.log(err)
