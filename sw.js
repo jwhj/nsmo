@@ -1,9 +1,10 @@
-var cacheName="qaq"
+var cacheName="abc"
 var cacheFiles=[
 	'./',
 	'index.html',
 	'a.js',
 	'vue.min.js',
+	'vue-router.min.js',
 	'a.css',
 	'TSCu_Comic.ttf',
 	'manifest.json'
