@@ -5,69 +5,155 @@
 		<link rel="manifest" href="manifest.json">
 		<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 		<script src="vue.min.js"></script>
+		<script src="vue-router.min.js"></script>
 		<link rel="stylesheet"href="a.css"/>
 		<script src="a.js"></script>
 	</head>
 	<body>
 		<div id="app"@touchmove.prevent>
-			<transition name="nf">
-				<div class="frm"v-show="ps=='menu'">
-					<h1>N Squared Minus One</h1>
-					<div class="btn b1":style="{width:wbtn}"@click="initGame();ps='game'">Start</div><br/>
-					<div class="btn b1":style="{width:wbtn}"@click="loadRec();ps='statistics'">Statistics</div><br/>
-					<div class="btn b1":style="{width:wbtn}"@click="ps='settings'">Settings</div>
-				</div>
-			</transition>
-			<transition name="nf">
-				<div class="frm"v-show="ps=='game'">
-					<span class="btn"@click="ps='menu'">Back</span>
-					<span class="btn"@click="initGame(1)">Restart</span>
-					<span class="btn"@click="initGame()">New Game</span>
-					<div style="height:10%;margin:3px">
-						<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
-							<tr>
-								<td style="width:50%">Steps</td>
-								<td style="width:50%">{{stp}}</td>
-							</tr>
-							<tr>
-								<td>Time</td>
-								<td>{{tm}}s</td>
-							</tr>
-						</table>
-					</div>
-					<table class="gt":style="{width:wd,height:wd}">
-						<tr v-for="i of n":style="{height:ew}">
-							<td class="tile"v-for="j of n"@click="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
-								{{calc(i-1,j-1)}}
-							</td>
-						</tr>
-					</table>
-				</div>
-			</transition>
-			<transition name="nf">
-				<div class="frm"v-show="ps=='statistics'">
-					<span class="btn"@click="ps='menu'">Back</span>
-					<table style="margin:auto;font-size:inherit;width:300px;text-align:center">
-						<tr>
-							<td style="width:70%">Least Move(s)</td>
-							<td>{{recMove}}</td>
-						</tr>
-						<tr>
-							<td>Minimum Time</td>
-							<td>{{recTime}}s</td>
-						</tr>
-					</table>
-				</div>
-			</transition>
-			<transition name="nf">
-				<div class="frm"v-show="ps=='settings'">
-					<span class="btn"@click="ps='menu'">Back</span><br/>
-					<input v-model.number="n"@change="saveConfig"/>
-				</div>
-			</transition>
+			<transition name="nf"><router-view></router-view></transition>
 		</div>
+		<template id="MenuTpl">
+			<div class="frm">
+				<h1>N Squared Minus One</h1>
+				<router-link to="/game"tag="div"class="btn b1":style="{width:wbtn}">Start</router-link><br/>
+				<router-link to="/statistics"tag="div"class="btn b1":style="{width:wbtn}">Statistics</router-link><br/>
+				<router-link to="/settings"tag="div"class="btn b1":style="{width:wbtn}">Settings</router-link>
+			</div>
+		</template>
+		<template id="GameTpl">
+			<div class="frm">
+				<span class="btn"@click="initGame(1)">Restart</span>
+				<span class="btn"@click="initGame()">New Game</span>
+				<div style="height:10%;margin:3px">
+					<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
+						<tr>
+							<td style="width:50%">Steps</td>
+							<td style="width:50%">{{stp}}</td>
+						</tr>
+						<tr>
+							<td>Time</td>
+							<td>{{tm}}s</td>
+						</tr>
+					</table>
+				</div>
+				<table class="gt":style="{width:wd,height:wd}">
+					<tr v-for="i of n":style="{height:ew}">
+						<td class="tile"v-for="j of n"@click="move(i-1,j-1)":style="{width:ew,opacity:a[(i-1)*n+j-1]?1:0}">
+							{{calc(i-1,j-1)}}
+						</td>
+					</tr>
+				</table>
+			</div>
+		</template>
+		<template id="StatisticsTpl">
+			<div class="frm">
+				<table style="margin:auto;font-size:inherit;width:300px;text-align:center">
+					<tr>
+						<td style="width:70%">Least Move(s)</td>
+						<td>{{rec[config.n]?rec[config.n].m:'???'}}</td>
+					</tr>
+					<tr>
+						<td>Minimum Time</td>
+						<td>{{rec[config.n]?rec[config.n].t:'???'}}s</td>
+					</tr>
+				</table>
+			</div>
+		</template>
+		<template id="SettingsTpl">
+			<div class="frm">
+				<input v-model.number="config.n"@change="saveConfig"/>
+			</div>
+		</template>
 		<script>
+			var config={
+				n:Number(localStorage.n) || 3
+			}
+			var rec=JSON.parse(localStorage.rec || '{}')
+			const Menu={
+				template:'#MenuTpl',
+				data(){
+					return{
+						wbtn:'33%'
+					}
+				},
+				mounted(){
+					with (document.documentElement){
+						var flag=clientWidth<clientHeight
+						this.wbtn=flag?'80%':'33%'
+					}
+				}
+			}
+			const Game={
+				template:"#GameTpl",
+				data(){
+					return{
+						config,
+						rec,
+						a:[],
+						b:[],
+						stp:0,
+						tm:0,
+						gs:0,
+						wd:'300px'
+					}
+				},
+				computed:{
+					n(){
+						return this.config.n
+					},
+					ew(){
+						return Math.floor(99/this.n+1e-6)+'%'
+					}
+				},
+				methods:{
+					calc(i,j){
+						var ans=this.a[i*this.n+j]
+						return ans?ans:''
+					},
+					tick,
+					check,
+					_move,
+					move,
+					initGame
+				},
+				beforeRouteEnter(to,from,next){
+					next(vm=>{
+						vm.initGame()
+					})
+				}
+			}
+			const Statistics={
+				template:'#StatisticsTpl',
+				data(){
+					return{
+						config,
+						rec
+					}
+				},
+				mounted(){
+				}
+			}
+			const Settings={
+				template:'#SettingsTpl',
+				data(){
+					return{
+						config
+					}
+				},
+				methods:{
+					saveConfig
+				}
+			}
+			const routes=[
+				{path:'/',component:Menu},
+				{path:'/game',component:Game},
+				{path:'/statistics',component:Statistics},
+				{path:'/settings',component:Settings}
+			]
+			const router=new VueRouter({routes})
 			var vm=new Vue({
+				router,
 				el:'#app',
 				data:{
 					ps:'menu',
@@ -104,12 +190,8 @@
 					}
 				}
 			})
-			with (document.documentElement){
-				var flag=clientWidth<clientHeight
-				vm.wbtn=flag?'80%':'33%'
-			}
-			if ('serviceWorker' in navigator)
-				navigator.serviceWorker.register('sw.js')
+			// if ('serviceWorker' in navigator)
+			// 	navigator.serviceWorker.register('sw.js')
 		</script>
 	</body>
 </html>

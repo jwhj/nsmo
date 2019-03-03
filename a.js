@@ -7,38 +7,37 @@ function randint(a,b){
 	return Math.floor(Math.random()*(b-a)+a+1e-6)
 }
 function tick(){
-	if (vm.gs!=1 || vm.ps!='game') return
-	++vm.tm
-	setTimeout(tick,1000)
+	if (this.gs!=1 || vm.$route.path!='/game') return
+	++this.tm
+	setTimeout(this.tick,1000)
 }
 function check(){
-	for (var i=0; i<vm.n*vm.n-1; ++i)
-		if (vm.a[i]!=i+1) return false
+	for (var i=0; i<this.n*this.n-1; ++i)
+		if (this.a[i]!=i+1) return false
 	return true
 }
 function _move(i,j,flag){
-	if (vm.gs==2 && !flag) return
-	if (vm.gs==0){
-		setTimeout(tick,1000)
-		vm.gs=1
+	if (this.gs==2 && !flag) return
+	if (this.gs==0){
+		setTimeout(this.tick,1000)
+		this.gs=1
 	}
 	var di=[-1,1,0,0],dj=[0,0,-1,1]
 	for (var w=0; w<4; ++w){
 		var ni=i+di[w],nj=j+dj[w]
-		if (0<=ni && ni<vm.n && 0<=nj && nj<vm.n){
-			var x=i*vm.n+j,y=ni*vm.n+nj
-			if (vm.a[y]==0){
-				Vue.set(vm.a,y,vm.a[x])
-				Vue.set(vm.a,x,0)
-				++vm.stp
-				if (!flag && check()){
-					vm.gs=2
-					var rec=JSON.parse(localStorage.rec || '{}')
-					if (rec[vm.n]){
-						rec[vm.n].m=Math.min(rec[vm.n].m,vm.stp)
-						rec[vm.n].t=Math.min(rec[vm.n].t,vm.tm)
+		if (0<=ni && ni<this.n && 0<=nj && nj<this.n){
+			var x=i*this.n+j,y=ni*this.n+nj
+			if (this.a[y]==0){
+				Vue.set(this.a,y,this.a[x])
+				Vue.set(this.a,x,0)
+				++this.stp
+				if (!flag && this.check()){
+					this.gs=2
+					if (rec[this.n]){
+						rec[this.n].m=Math.min(rec[this.n].m,this.stp)
+						rec[this.n].t=Math.min(rec[this.n].t,this.tm)
 					}
-					else rec[vm.n]={m:vm.stp,t:vm.tm}
+					else rec[this.n]={m:this.stp,t:this.tm}
 					localStorage.rec=JSON.stringify(rec)
 				}
 				return
@@ -47,34 +46,34 @@ function _move(i,j,flag){
 	}
 }
 function move(x,y,flag){
-	for (var i=0; i<vm.n; ++i)
-		if (!vm.a[i*vm.n+y]){
-			if (i<x) for (var u=i+1; u<=x; ++u) _move(u,y,flag)
-			else if (i>x) for (var u=i-1; u>=x; --u) _move(u,y,flag)
+	for (var i=0; i<this.n; ++i)
+		if (!this.a[i*this.n+y]){
+			if (i<x) for (var u=i+1; u<=x; ++u) this._move(u,y,flag)
+			else if (i>x) for (var u=i-1; u>=x; --u) this._move(u,y,flag)
 			return
 		}
-	for (var j=0; j<vm.n; ++j)
-		if (!vm.a[x*vm.n+j]){
-			if (j<y) for (var v=j+1; v<=y; ++v) _move(x,v,flag)
-			else if (j>y) for (var v=j-1; v>=y; --v) _move(x,v,flag)
+	for (var j=0; j<this.n; ++j)
+		if (!this.a[x*this.n+j]){
+			if (j<y) for (var v=j+1; v<=y; ++v) this._move(x,v,flag)
+			else if (j>y) for (var v=j-1; v>=y; --v) this._move(x,v,flag)
 			return
 		}
 }
 function initGame(flag){
 	if (!flag){
-		vm.a=range(1,vm.n*vm.n).concat(0)
-		for (var p=0; p<100*vm.n*vm.n; ++p){
-			move(randint(0,vm.n),randint(0,vm.n),1)
+		this.a=range(1,this.n*this.n).concat(0)
+		for (var p=0; p<100*this.n*this.n; ++p){
+			this.move(randint(0,this.n),randint(0,this.n),1)
 		}
-		vm.b=Array.from(vm.a)
+		this.b=Array.from(this.a)
 	}
 	else{
-		vm.a=Array.from(vm.b)
+		this.a=Array.from(this.b)
 	}
-	vm.gs=0
-	vm.stp=0
-	vm.tm=0
+	this.gs=0
+	this.stp=0
+	this.tm=0
 }
 function saveConfig(){
-	localStorage.n=vm.n;
+	localStorage.n=config.n;
 }
