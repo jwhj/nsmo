@@ -55,3 +55,18 @@ td.tile{
 .nf-enter-to{
 	transform: scale(1);
 }
+.bar{
+	position: absolute;
+	left: 0;
+	bottom: 0;
+	width: 100%;
+	text-align: center;
+}
+.ctrlbtn{
+	width: 31%;
+	display: inline-block;
+	transition: background-color 1s;
+}
+.ctrlbtn:hover{
+	background-color: #999;
+}

@@ -12,6 +12,16 @@
 	<body>
 		<div id="app"@touchmove.prevent>
 			<transition name="nf"><router-view></router-view></transition>
+			<div v-show="isIOS"class="bar">
+				<div class="ctrlbtn"@click="router.go(-1)">
+					&lt;
+				</div>
+				<div class="ctrlbtn"@click="router.push('/')">
+					O
+				</div>
+				<div class="ctrlbtn">
+				</div>
+			</div>
 		</div>
 		<template id="MenuTpl">
 			<div class="frm">
@@ -156,42 +166,14 @@
 				router,
 				el:'#app',
 				data:{
-					ps:'menu',
-					n:Number(localStorage.n) || 3,
-					a:[],
-					b:[],
-					stp:0,
-					tm:0,
-					gs:0,
-					recMove:'',
-					recTime:'',
-					wd:'300px',
-					wbtn:'33%'
-				},
-				computed:{
-					ew:function(){
-						return Math.floor(99/this.n+1e-6)+'%'
-					}
-				},
-				methods:{
-					calc:function(i,j){
-						var ans=this.a[i*this.n+j]
-						return ans?ans:''
-					},
-					loadRec:function(){
-						this.recMove=this.recTime='???'
-						if (localStorage.rec){
-							var rec=JSON.parse(localStorage.rec)
-							if (rec[this.n]){
-								this.recMove=rec[this.n].m
-								this.recTime=rec[this.n].t
-							}
-						}
-					}
+					isIOS:0
 				}
 			})
-			// if ('serviceWorker' in navigator)
-			// 	navigator.serviceWorker.register('sw.js')
+			if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
+				vm.isIOS=1
+			}
+			if ('serviceWorker' in navigator)
+				navigator.serviceWorker.register('sw.js')
 		</script>
 	</body>
 </html>
