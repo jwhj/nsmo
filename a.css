@@ -65,8 +65,9 @@ td.tile{
 .ctrlbtn{
 	width: 31%;
 	display: inline-block;
-	transition: background-color 1s;
+	transition: background-color 0.5s;
+	font-family: sans-serif;
 }
-.ctrlbtn:hover{
+.ctrlbtn:active{
 	background-color: #999;
 }

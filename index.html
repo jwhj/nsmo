@@ -3,7 +3,6 @@
 		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 		<meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
 		<link rel="manifest" href="manifest.json">
-		<script src="https://cdn.bootcss.com/fastclick/1.0.6/fastclick.min.js"></script>
 		<script src="vue.min.js"></script>
 		<script src="vue-router.min.js"></script>
 		<link rel="stylesheet"href="a.css"/>
@@ -110,7 +109,7 @@
 				},
 				computed:{
 					n(){
-						return this.config.n
+						return config.n
 					},
 					ew(){
 						return Math.floor(99/this.n+1e-6)+'%'
@@ -172,8 +171,8 @@
 			if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
 				vm.isIOS=1
 			}
-			if ('serviceWorker' in navigator)
-				navigator.serviceWorker.register('sw.js')
+			// if ('serviceWorker' in navigator)
+			// 	navigator.serviceWorker.register('sw.js')
 		</script>
 	</body>
 </html>
