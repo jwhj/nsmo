@@ -80,13 +80,7 @@
 			}
 			var rec=JSON.parse(localStorage.rec || '{}')
 			const Menu={
-				template:'#MenuTpl',
-				mounted(){
-					with (document.documentElement){
-						var flag=clientWidth<clientHeight
-						this.wbtn=flag?'80%':'33%'
-					}
-				}
+				template:'#MenuTpl'
 			}
 			const Game={
 				template:"#GameTpl",
