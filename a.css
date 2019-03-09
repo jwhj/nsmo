@@ -37,6 +37,7 @@ td.tile{
 }
 .b1{
 	transition: margin-left 1s,background-color 1s;
+	width: 33%;
 }
 .b1:hover{
 	margin-left: 100px;
@@ -70,4 +71,9 @@ td.tile{
 }
 .ctrlbtn:active{
 	background-color: #999;
+}
+@media screen and (orientation: portrait){
+	.b1{
+		width: 80%;
+	}
 }

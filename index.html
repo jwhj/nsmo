@@ -25,9 +25,9 @@
 		<template id="MenuTpl">
 			<div class="frm">
 				<h1>N Squared Minus One</h1>
-				<router-link to="/game"tag="div"class="btn b1":style="{width:wbtn}">Start</router-link><br/>
-				<router-link to="/statistics"tag="div"class="btn b1":style="{width:wbtn}">Statistics</router-link><br/>
-				<router-link to="/settings"tag="div"class="btn b1":style="{width:wbtn}">Settings</router-link>
+				<router-link to="/game"tag="div"class="btn b1">Start</router-link><br/>
+				<router-link to="/statistics"tag="div"class="btn b1">Statistics</router-link><br/>
+				<router-link to="/settings"tag="div"class="btn b1">Settings</router-link>
 			</div>
 		</template>
 		<template id="GameTpl">
@@ -81,11 +81,6 @@
 			var rec=JSON.parse(localStorage.rec || '{}')
 			const Menu={
 				template:'#MenuTpl',
-				data(){
-					return{
-						wbtn:'33%'
-					}
-				},
 				mounted(){
 					with (document.documentElement){
 						var flag=clientWidth<clientHeight
