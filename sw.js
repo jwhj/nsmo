@@ -1,4 +1,4 @@
-var cacheName="cxz"
+var cacheName="cxz1"
 var cacheFiles=[
 	'./',
 	'index.html',
