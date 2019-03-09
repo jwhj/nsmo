@@ -14,6 +14,7 @@ self.addEventListener('install',e=>{
 		cache.addAll(cacheFiles)
 	})
 	e.waitUntil(cachePromise)
+	self.skipWaiting()
 })
 self.addEventListener('fetch',e=>{
 	console.log(e.request)
