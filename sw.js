@@ -1,4 +1,4 @@
-var cacheName="qaz"
+var cacheName="123"
 var cacheFiles=[
 	'./',
 	'index.html',

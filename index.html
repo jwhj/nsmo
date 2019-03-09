@@ -11,7 +11,7 @@
 	<body>
 		<div id="app"@touchmove.prevent>
 			<transition name="nf"><router-view></router-view></transition>
-			<div v-show="isIOS"class="bar">
+			<div v-show="isIOS && navigator.standalone"class="bar">
 				<div class="ctrlbtn"@click="router.go(-1)">
 					&lt;
 				</div>
