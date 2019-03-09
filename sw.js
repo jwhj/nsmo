@@ -1,4 +1,4 @@
-var cacheName="cxz12"
+var cacheName="cxz123"
 var cacheFiles=[
 	'./',
 	'index.html',
@@ -21,11 +21,9 @@ self.addEventListener('fetch',e=>{
 	console.log(e.request)
 	e.respondWith(
 		caches.match(e.request).then(cache=>{
-			console.log('Cached')
 			console.log(cache)
 			return cache || fetch(e.request)
 		}).catch(err=>{
-			console.log(err)
 			return fetch(e.request)
 		})
 	)
@@ -34,7 +32,6 @@ self.addEventListener('activate',e=>{
 	var cachePromise=caches.keys().then(keys=>{
 		return Promise.all(keys.map(key=>{
 			if (key!=cacheName){
-				console.log(key)
 				return caches.delete(key)
 			}
 		}))
