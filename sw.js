@@ -1,4 +1,4 @@
-var cacheName="123"
+var cacheName="zxc"
 var cacheFiles=[
 	'./',
 	'index.html',
@@ -13,7 +13,7 @@ self.addEventListener('install',e=>{
 	var cachePromise=caches.open(cacheName).then(cache=>{
 		cache.addAll(cacheFiles)
 	}).then(()=>{
-		self.skipWaiting()
+		return self.skipWaiting()
 	})
 	e.waitUntil(cachePromise)
 })
