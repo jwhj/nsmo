@@ -67,7 +67,7 @@
 						<td>{{rec[config.n].t}}s</td>
 					</tr>
 				</table>
-				<p v-else="!rec[config.n]">你真的完成过{{config.n}}^2-1吗？</p>
+				<p v-else="!rec[config.n]">你真的会玩{{config.n}}^2-1吗？</p>
 			</div>
 		</template>
 		<template id="SettingsTpl">
@@ -168,9 +168,6 @@
 			}
 			if ('serviceWorker' in navigator){
 				navigator.serviceWorker.register('sw.js')
-				navigator.serviceWorker.addEventListener('message',e=>{
-					console.log(e.data)
-				})
 			}
 		</script>
 	</body>
