@@ -1,4 +1,4 @@
-var cacheName="789"
+var cacheName="plm"
 var cacheFiles=[
 	'./',
 	'index.html',
