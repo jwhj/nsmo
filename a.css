@@ -23,7 +23,8 @@ table.gt{
 td.tile{
 	background-color: #999;
 	color: black;
-	transition: opacity 0.6s;
+	/* transition: opacity 0.6s; */
+	transition: transform 0.5s;
 }
 .btn{
 	outline: white solid 2px;
