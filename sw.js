@@ -1,13 +1,8 @@
-var cacheName="ij"
+var cacheName="abc"
 var cacheFiles=[
-	'./',
-	'index.html',
-	'a.js',
 	'vue.min.js',
 	'vue-router.min.js',
-	'a.css',
-	'TSCu_Comic.ttf',
-	'manifest.json'
+	'TSCu_Comic.ttf'
 ]
 self.addEventListener('install',e=>{
 	var cachePromise=caches.open(cacheName).then(cache=>{
