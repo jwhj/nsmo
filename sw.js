@@ -1,4 +1,4 @@
-var cacheName="abc"
+var cacheName="abcde"
 var cacheFiles=[
 	'vue.min.js',
 	'vue-router.min.js',
@@ -7,6 +7,8 @@ var cacheFiles=[
 self.addEventListener('install',e=>{
 	var cachePromise=caches.open(cacheName).then(cache=>{
 		cache.addAll(cacheFiles)
+	}).then(()=>{
+		self.skipWaiting()
 	})
 	e.waitUntil(cachePromise)
 })
