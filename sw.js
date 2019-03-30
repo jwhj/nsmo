@@ -1,7 +1,8 @@
-var cacheName="plm"
+var cacheName="qaz"
 var cacheFiles=[
 	'vue.min.js',
 	'vue-router.min.js',
+	'av.min.js',
 	'TSCu_Comic.ttf'
 ]
 self.addEventListener('install',e=>{
