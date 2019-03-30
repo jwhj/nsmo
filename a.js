@@ -16,6 +16,15 @@ function check(){
 		if (this.a[i]!=i+1) return false
 	return true
 }
+function merge(a,b){
+	for (x in b)
+		if (!(x in a)) a[x]=b[x]
+		else{
+			a[x].m=Math.min(a[x].m,b[x].m)
+			a[x].t=Math.min(a[x].t,b[x].t)
+		}
+	return a
+}
 function _move(i,j,flag){
 	if (this.gs==2 && !flag) return
 	if (this.gs==0){
@@ -33,12 +42,13 @@ function _move(i,j,flag){
 				++this.stp
 				if (!flag && this.check()){
 					this.gs=2
-					if (rec[this.n]){
-						rec[this.n].m=Math.min(rec[this.n].m,this.stp)
-						rec[this.n].t=Math.min(rec[this.n].t,this.tm)
-					}
-					else rec[this.n]={m:this.stp,t:this.tm}
-					localStorage.rec=JSON.stringify(rec)
+					// if (rec[this.n]){
+					// 	rec[this.n].m=Math.min(rec[this.n].m,this.stp)
+					// 	rec[this.n].t=Math.min(rec[this.n].t,this.tm)
+					// }
+					// else rec[this.n]={m:this.stp,t:this.tm}
+					const newRec={[this.n]:{m:this.stp,t:this.tm}}
+					localStorage.rec=JSON.stringify(merge(rec,newRec))
 				}
 				return
 			}
@@ -76,4 +86,17 @@ function initGame(flag){
 }
 function saveConfig(){
 	localStorage.n=config.n;
+}
+async function getCloudScore(){
+	const q=new AV.Query(AV.User)
+	return (await q.get(AV.User.current().id)).get('test') || {}
+}
+async function uploadScore(){
+	const cloudRec=await getCloudScore()
+	AV.User.current().set('test',merge(cloudRec,rec))
+	AV.User.current().save()
+}
+async function syncScoreFromCloud(){
+	const cloudRec=await getCloudScore()
+	localStorage.rec=JSON.stringify(merge(rec,cloudRec))
 }

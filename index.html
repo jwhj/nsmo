@@ -5,6 +5,7 @@
 		<link rel="manifest" href="manifest.json">
 		<script src="vue.min.js"></script>
 		<script src="vue-router.min.js"></script>
+		<script src="av.min.js"></script>
 		<link rel="stylesheet"href="a.css"/>
 		<script src="a.js"></script>
 	</head>
@@ -27,6 +28,7 @@
 				<h1>N Squared Minus One</h1>
 				<router-link to="/game"tag="div"class="btn b1">Start</router-link><br/>
 				<router-link to="/statistics"tag="div"class="btn b1">Statistics</router-link><br/>
+				<router-link to="/cloud"tag="div"class="btn b1">Cloud</router-link><br/>
 				<router-link to="/settings"tag="div"class="btn b1">Settings</router-link>
 			</div>
 		</template>
@@ -58,16 +60,28 @@
 		<template id="StatisticsTpl">
 			<div class="frm">
 				<table v-if="rec[config.n]"style="margin:auto;font-size:inherit;width:300px;text-align:center">
-					<tr>
-						<td style="width:70%">Least Move(s)</td>
-						<td>{{rec[config.n].m}}</td>
-					</tr>
-					<tr>
-						<td>Minimum Time</td>
-						<td>{{rec[config.n].t}}s</td>
-					</tr>
+						<tr>
+							<td style="width:70%">Least Move(s)</td>
+							<td>{{rec[config.n].m}}</td>
+						</tr>
+						<tr>
+							<td>Minimum Time</td>
+							<td>{{rec[config.n].t}}s</td>
+						</tr>
 				</table>
-				<p v-else="!rec[config.n]">你真的会玩{{config.n}}^2-1吗？</p>
+				<p v-else>你真的会玩{{config.n}}^2-1吗？</p>
+			</div>
+		</template>
+		<template id="CloudTpl">
+			<div class="frm">
+				<p>UI是什么不管了</p>
+				<input v-model="userName"/>
+				<input type="password"v-model="password"/><br/>
+				<div class="btn b1"@click="AV.User.signUp(userName,password).catch(alert)">Signup</div><br/>
+				<div v-if="!user"class="btn b1"@click="login">Login</div>
+				<div v-else class="btn b1"@click="AV.User.logOut().then(user=null)">Logout</div><br/>
+				<div class="btn b1"@click="uploadScore">Upload score</div><br/>
+				<div class="btn b1"@click="syncScoreFromCloud">Sync score from cloud</div>
 			</div>
 		</template>
 		<template id="SettingsTpl">
@@ -76,10 +90,13 @@
 			</div>
 		</template>
 		<script>
-			var config={
+			const config={
 				n:Number(localStorage.n) || 3
 			}
-			var rec=JSON.parse(localStorage.rec || '{}')
+			const rec=JSON.parse(localStorage.rec || '{}')
+			const appId='idl1yBaD2ckrrgqYYhbyW13G-gzGzoHsz'
+			const appKey='mSFDubuva14YnvmkELOWBBU1'
+			AV.init({appId,appKey})
 			const Menu={
 				template:'#MenuTpl',
 				data(){
@@ -138,6 +155,29 @@
 				mounted(){
 				}
 			}
+			const Cloud={
+				template:'#CloudTpl',
+				data(){
+					return{
+						user:null,
+						userName:'',
+						password:''
+					}
+				},
+				methods:{
+					login(){
+						AV.User.logIn(this.userName,this.password).then(res=>{
+							this.password=''
+							this.user=res
+						}).catch(console.log)
+					}
+				},
+				beforeRouteEnter(from,to,next){
+					next(vm=>{
+						vm.user=AV.User.current()
+					})
+				}
+			}
 			const Settings={
 				template:'#SettingsTpl',
 				data(){
@@ -153,6 +193,7 @@
 				{path:'/',component:Menu},
 				{path:'/game',component:Game},
 				{path:'/statistics',component:Statistics},
+				{path:'/cloud',component:Cloud},
 				{path:'/settings',component:Settings}
 			]
 			const router=new VueRouter({routes})
