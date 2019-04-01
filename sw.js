@@ -1,5 +1,8 @@
 var cacheName="qaz"
 var cacheFiles=[
+	'./',
+	'a.js',
+	'a.css',
 	'vue.min.js',
 	'vue-router.min.js',
 	'av.min.js',
