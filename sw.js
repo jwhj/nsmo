@@ -1,4 +1,4 @@
-var cacheName="qazwsx"
+var cacheName="qa"
 var cacheFiles=[
 	'vue.min.js',
 	'vue-router.min.js',
