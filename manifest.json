@@ -4,8 +4,8 @@
 	"orientation": "portrait-primary",
 	"icon":[
 		{
-			"src":"favicon.ico",
-			"type":"image/x-icon",
+			"src":"favicon.png",
+			"type":"image/png",
 			"size":"100x100"
 		}
 	]

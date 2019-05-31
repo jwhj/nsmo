@@ -1,10 +1,10 @@
-var cacheName="qa"
+var cacheName="plm"
 var cacheFiles=[
 	'vue.min.js',
 	'vue-router.min.js',
 	'av.min.js',
 	'TSCu_Comic.ttf',
-	'favicon.ico'
+	'favicon.png'
 ]
 self.addEventListener('install',e=>{
 	var cachePromise=caches.open(cacheName).then(cache=>{
