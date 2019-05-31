@@ -1,5 +1,12 @@
 {
 	"short_name":"nsmo",
     "display": "standalone",
-	"orientation": "portrait-primary"
+	"orientation": "portrait-primary",
+	"icon":[
+		{
+			"src":"favicon.ico",
+			"type":"image/x-icon",
+			"size":"100x100"
+		}
+	]
 }
