@@ -7,13 +7,17 @@ function randint(a, b) {
 	return Math.floor(Math.random() * (b - a) + a + 1e-6)
 }
 function merge(a, b) {
-	for (x in b)
+	for (let x in b)
 		if (!(x in a)) a[x] = b[x]
 		else {
 			a[x].m = Math.min(a[x].m, b[x].m)
 			a[x].t = Math.min(a[x].t, b[x].t)
 		}
 	return a
+}
+async function getCloudScore() {
+	const q = new AV.Query(AV.User)
+	return (await q.get(AV.User.current().id)).get('test') || {}
 }
 const config = {
 	n: Number(localStorage.n) || 3
@@ -170,7 +174,7 @@ const Cloud = {
 			localStorage.rec = JSON.stringify(merge(rec, cloudRec))
 		}
 	},
-	beforeRouteEnter(from, to, next) {
+	beforeRouteEnter(to, from, next) {
 		next(vm => {
 			vm.user = AV.User.current()
 		})
