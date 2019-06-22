@@ -1,217 +1,102 @@
 <html>
-	<head>
-		<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
-		<meta name="viewport"content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no"/>
-		<link rel="manifest" href="manifest.json">
-		<script src="vue.min.js"></script>
-		<script src="vue-router.min.js"></script>
-		<script src="av.min.js"></script>
-		<link rel="stylesheet"href="a.css"/>
-		<script src="a.js"></script>
-		<link rel="shortcut icon"href="favicon.png"/>
-		<link rel="apple-touch-icon"href="favicon.png"/>
-	</head>
-	<body>
-		<div id="app"@touchmove.prevent>
-			<transition name="nf"><router-view></router-view></transition>
-			<div v-show="isIOS && navigator.standalone"class="bar">
-				<div class="ctrlbtn"@click="router.go(-1)">
-					&lt;
-				</div>
-				<div class="ctrlbtn"@click="router.push('/')">
-					O
-				</div>
-				<div class="ctrlbtn">
-				</div>
+
+<head>
+	<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+	<meta name="viewport"
+		content="width=device-width, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0, user-scalable=no" />
+	<link rel="manifest" href="manifest.json">
+	<script src="vue.min.js"></script>
+	<script src="vue-router.min.js"></script>
+	<script src="av.min.js"></script>
+	<link rel="stylesheet" href="a.css" />
+	<link rel="shortcut icon" href="favicon.png" />
+	<link rel="apple-touch-icon" href="favicon.png" />
+</head>
+
+<body>
+	<div id="app" @touchmove.prevent>
+		<transition name="nf">
+			<router-view></router-view>
+		</transition>
+		<div v-show="isIOS && navigator.standalone" class="bar">
+			<div class="ctrlbtn" @click="router.go(-1)">
+				&lt;
+			</div>
+			<div class="ctrlbtn" @click="router.push('/')">
+				O
+			</div>
+			<div class="ctrlbtn">
 			</div>
 		</div>
-		<template id="MenuTpl">
-			<div class="frm">
-				<h1>N Squared Minus One</h1>
-				<router-link to="/game"tag="div"class="btn b1">Start</router-link><br/>
-				<router-link to="/statistics"tag="div"class="btn b1">Statistics</router-link><br/>
-				<router-link to="/cloud"tag="div"class="btn b1">Cloud</router-link><br/>
-				<router-link to="/settings"tag="div"class="btn b1">Settings</router-link>
-			</div>
-		</template>
-		<template id="GameTpl">
-			<div class="frm">
-				<span class="btn"@click="initGame(1)">Restart</span>
-				<span class="btn"@click="initGame()">New Game</span>
-				<div style="height:10%;margin:3px">
-					<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
-						<tr>
-							<td style="width:50%">Steps</td>
-							<td style="width:50%">{{stp}}</td>
-						</tr>
-						<tr>
-							<td>Time</td>
-							<td>{{tm}}s</td>
-						</tr>
-					</table>
-				</div>
-				<table class="gt":style="{width:wd,height:wd}">
-					<tr v-for="i of n":style="{height:ew}">
-						<td class="tile"v-for="j of n"@click="move(i-1,j-1)":style="{width:ew,transform:'scale('+(a[(i-1)*n+j-1]?1:0)+')'}">
-							{{calc(i-1,j-1)}}
-						</td>
+	</div>
+	<template id="MenuTpl">
+		<div class="frm">
+			<h1>N Squared Minus One</h1>
+			<router-link to="/game" tag="div" class="btn b1">Start</router-link><br />
+			<router-link to="/statistics" tag="div" class="btn b1">Statistics</router-link><br />
+			<router-link to="/cloud" tag="div" class="btn b1">Cloud</router-link><br />
+			<router-link to="/settings" tag="div" class="btn b1">Settings</router-link>
+		</div>
+	</template>
+	<template id="GameTpl">
+		<div class="frm">
+			<span class="btn" @click="initGame(1)">Restart</span>
+			<span class="btn" @click="initGame()">New Game</span>
+			<div style="height:10%;margin:3px">
+				<table style="margin:auto;font-size:inherit;width:200px;text-align:center">
+					<tr>
+						<td style="width:50%">Steps</td>
+						<td style="width:50%">{{stp}}</td>
+					</tr>
+					<tr>
+						<td>Time</td>
+						<td>{{tm}}s</td>
 					</tr>
 				</table>
 			</div>
-		</template>
-		<template id="StatisticsTpl">
-			<div class="frm">
-				<table v-if="rec[config.n]"style="margin:auto;font-size:inherit;width:300px;text-align:center">
-						<tr>
-							<td style="width:70%">Least Move(s)</td>
-							<td>{{rec[config.n].m}}</td>
-						</tr>
-						<tr>
-							<td>Minimum Time</td>
-							<td>{{rec[config.n].t}}s</td>
-						</tr>
-				</table>
-				<p v-else>你真的会玩{{config.n}}^2-1吗？</p>
-			</div>
-		</template>
-		<template id="CloudTpl">
-			<div class="frm">
-				<p>UI是什么不管了</p>
-				<input v-model="userName"/>
-				<input type="password"v-model="password"/><br/>
-				<div class="btn b1"@click="AV.User.signUp(userName,password).catch(alert)">Signup</div><br/>
-				<div v-if="!user"class="btn b1"@click="login">Login</div>
-				<div v-else class="btn b1"@click="AV.User.logOut().then(user=null)">Logout</div><br/>
-				<div class="btn b1"@click="uploadScore">Upload score</div><br/>
-				<div class="btn b1"@click="syncScoreFromCloud">Sync score from cloud</div>
-			</div>
-		</template>
-		<template id="SettingsTpl">
-			<div class="frm">
-				<input v-model.number="config.n"@change="saveConfig"/>
-			</div>
-		</template>
-		<script>
-			const config={
-				n:Number(localStorage.n) || 3
-			}
-			const rec=JSON.parse(localStorage.rec || '{}')
-			const appId='idl1yBaD2ckrrgqYYhbyW13G-gzGzoHsz'
-			const appKey='mSFDubuva14YnvmkELOWBBU1'
-			AV.init({appId,appKey})
-			const Menu={
-				template:'#MenuTpl',
-				data(){
-					return{
-						config
-					}
-				}
-			}
-			const Game={
-				template:"#GameTpl",
-				data(){
-					return{
-						config,
-						rec,
-						a:[],
-						b:[],
-						stp:0,
-						tm:0,
-						gs:0,
-						wd:'300px'
-					}
-				},
-				computed:{
-					n(){
-						return config.n
-					},
-					ew(){
-						return Math.floor(99/this.n+1e-6)+'%'
-					}
-				},
-				methods:{
-					calc(i,j){
-						var ans=this.a[i*this.n+j]
-						return ans?ans:''
-					},
-					tick,
-					check,
-					_move,
-					move,
-					initGame
-				},
-				beforeRouteEnter(to,from,next){
-					next(vm=>{
-						vm.initGame()
-					})
-				}
-			}
-			const Statistics={
-				template:'#StatisticsTpl',
-				data(){
-					return{
-						config,
-						rec
-					}
-				},
-				mounted(){
-				}
-			}
-			const Cloud={
-				template:'#CloudTpl',
-				data(){
-					return{
-						user:null,
-						userName:'',
-						password:''
-					}
-				},
-				methods:{
-					login(){
-						AV.User.logIn(this.userName,this.password).then(res=>{
-							this.password=''
-							this.user=res
-						}).catch(console.log)
-					}
-				},
-				beforeRouteEnter(from,to,next){
-					next(vm=>{
-						vm.user=AV.User.current()
-					})
-				}
-			}
-			const Settings={
-				template:'#SettingsTpl',
-				data(){
-					return{
-						config
-					}
-				},
-				methods:{
-					saveConfig
-				}
-			}
-			const routes=[
-				{path:'/',component:Menu},
-				{path:'/game',component:Game},
-				{path:'/statistics',component:Statistics},
-				{path:'/cloud',component:Cloud},
-				{path:'/settings',component:Settings}
-			]
-			const router=new VueRouter({routes})
-			var vm=new Vue({
-				router,
-				el:'#app',
-				data:{
-					isIOS:0
-				}
-			})
-			if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)){
-				vm.isIOS=1
-			}
-			if ('serviceWorker' in navigator){
-				navigator.serviceWorker.register('sw.js')
-			}
-		</script>
-	</body>
+			<table class="gt" :style="{width:wd,height:wd}">
+				<tr v-for="i of n" :style="{height:ew}">
+					<td class="tile" v-for="j of n" @click="move(i-1,j-1)"
+						:style="{width:ew,transform:'scale('+(a[(i-1)*n+j-1]?1:0)+')'}">
+						{{calc(i-1,j-1)}}
+					</td>
+				</tr>
+			</table>
+		</div>
+	</template>
+	<template id="StatisticsTpl">
+		<div class="frm">
+			<table v-if="rec[config.n]" style="margin:auto;font-size:inherit;width:300px;text-align:center">
+				<tr>
+					<td style="width:70%">Least Move(s)</td>
+					<td>{{rec[config.n].m}}</td>
+				</tr>
+				<tr>
+					<td>Minimum Time</td>
+					<td>{{rec[config.n].t}}s</td>
+				</tr>
+			</table>
+			<p v-else>你真的会玩{{config.n}}^2-1吗？</p>
+		</div>
+	</template>
+	<template id="CloudTpl">
+		<div class="frm">
+			<p>UI是什么不管了</p>
+			<input v-model="userName" />
+			<input type="password" v-model="password" /><br />
+			<div class="btn b1" @click="AV.User.signUp(userName,password).catch(alert)">Signup</div><br />
+			<div v-if="!user" class="btn b1" @click="login">Login</div>
+			<div v-else class="btn b1" @click="AV.User.logOut().then(user=null)">Logout</div><br />
+			<div class="btn b1" @click="uploadScore">Upload score</div><br />
+			<div class="btn b1" @click="syncScoreFromCloud">Sync score from cloud</div>
+		</div>
+	</template>
+	<template id="SettingsTpl">
+		<div class="frm">
+			<input v-model.number="config.n" @change="saveConfig" />
+		</div>
+	</template>
+	<script src="index.js"></script>
+</body>
+
 </html>
