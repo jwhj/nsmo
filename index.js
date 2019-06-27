@@ -6,7 +6,9 @@ function range(l, r, step = 1) {
 function randint(a, b) {
 	return Math.floor(Math.random() * (b - a) + a + 1e-6)
 }
-function merge(a, b) {
+function merge(a, b, mode) {
+	if (mode == 1)
+		a = a.blind
 	for (let x in b)
 		if (!(x in a)) a[x] = b[x]
 		else {
@@ -20,9 +22,12 @@ async function getCloudScore() {
 	return (await q.get(AV.User.current().id)).get('test') || {}
 }
 const config = {
-	n: Number(localStorage.n) || 3
+	n: Number(localStorage.n) || 3,
+	mode: Number(localStorage.mode) || 0
 }
 const rec = JSON.parse(localStorage.rec || '{}')
+if (!rec.blind) rec.blind = {}
+var rec1 = config.mode ? rec.blind : rec
 const appId = 'idl1yBaD2ckrrgqYYhbyW13G-gzGzoHsz'
 const appKey = 'mSFDubuva14YnvmkELOWBBU1'
 AV.init({ appId, appKey })
@@ -31,6 +36,13 @@ const Menu = {
 	data() {
 		return {
 			config
+		}
+	},
+	methods: {
+		toggleMode() {
+			this.config.mode ^= 1
+			rec1 = config.mode ? rec.blind : rec
+			localStorage.mode = config.mode
 		}
 	}
 }
@@ -58,6 +70,7 @@ const Game = {
 	},
 	methods: {
 		calc(i, j) {
+			if (this.config.mode == 1 && this.gs == 1) return ''
 			var ans = this.a[i * this.n + j]
 			return ans ? ans : ''
 		},
@@ -94,7 +107,7 @@ const Game = {
 							// }
 							// else rec[this.n]={m:this.stp,t:this.tm}
 							const newRec = { [this.n]: { m: this.stp, t: this.tm } }
-							localStorage.rec = JSON.stringify(merge(rec, newRec))
+							localStorage.rec = JSON.stringify(merge(rec, newRec, this.config.mode))
 						}
 						return
 					}

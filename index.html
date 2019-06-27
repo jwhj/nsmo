@@ -35,7 +35,8 @@
 			<router-link to="/game" tag="div" class="btn b1">Start</router-link><br />
 			<router-link to="/statistics" tag="div" class="btn b1">Statistics</router-link><br />
 			<router-link to="/cloud" tag="div" class="btn b1">Cloud</router-link><br />
-			<router-link to="/settings" tag="div" class="btn b1">Settings</router-link>
+			<router-link to="/settings" tag="div" class="btn b1">Settings</router-link><br />
+			<div class="btn b1" @click="toggleMode">Mode : {{config.mode?'blind':'normal'}}</div>
 		</div>
 	</template>
 	<template id="GameTpl">
@@ -66,14 +67,14 @@
 	</template>
 	<template id="StatisticsTpl">
 		<div class="frm">
-			<table v-if="rec[config.n]" style="margin:auto;font-size:inherit;width:300px;text-align:center">
+			<table v-if="rec1[config.n]" style="margin:auto;font-size:inherit;width:300px;text-align:center">
 				<tr>
 					<td style="width:70%">Least Move(s)</td>
-					<td>{{rec[config.n].m}}</td>
+					<td>{{rec1[config.n].m}}</td>
 				</tr>
 				<tr>
 					<td>Minimum Time</td>
-					<td>{{rec[config.n].t}}s</td>
+					<td>{{rec1[config.n].t}}s</td>
 				</tr>
 			</table>
 			<p v-else>你真的会玩{{config.n}}^2-1吗？</p>
