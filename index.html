@@ -98,6 +98,25 @@
 		</div>
 	</template>
 	<script src="index.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/upup@1.1.0/dist/upup.min.js"></script>
+	<script>
+		UpUp.start({
+			'content-url': '/',
+			'assets': [
+				'/a.css',
+				'/av.min.js',
+				'/favicon.png',
+				'/',
+				'/index.html',
+				'/index.js',
+				'/manifest.json',
+				'/TSCu_Comic.ttf',
+				'/vue-router.min.js',
+				'/vue.min.js'
+			],
+			'service-worker-url': '/upup.sw.min.js'
+		})
+	</script>
 </body>
 
 </html>

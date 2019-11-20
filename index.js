@@ -224,6 +224,3 @@ var vm = new Vue({
 if (/(iPhone|iPad|iPod|iOS)/i.test(navigator.userAgent)) {
 	vm.isIOS = 1
 }
-if ('serviceWorker' in navigator) {
-	navigator.serviceWorker.register('sw.js')
-}
