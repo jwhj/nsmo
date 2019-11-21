@@ -28,8 +28,8 @@ const config = {
 const rec = JSON.parse(localStorage.rec || '{}')
 if (!rec.blind) rec.blind = {}
 var rec1 = config.mode ? rec.blind : rec
-const appId = 'idl1yBaD2ckrrgqYYhbyW13G-gzGzoHsz'
-const appKey = 'mSFDubuva14YnvmkELOWBBU1'
+const appId = 'H57GWOy9H3JbDg8oUAkSwRP8-MdYXbMMI'
+const appKey = 'xMw606rukOk3FnhLYEQJRqUv'
 AV.init({ appId, appKey })
 const Menu = {
 	template: '#MenuTpl',
