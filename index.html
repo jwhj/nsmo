@@ -94,6 +94,7 @@
 	</template>
 	<template id="SettingsTpl">
 		<div class="frm">
+			<p>UI是什么不管了</p>
 			<input v-model.number="config.n" @change="saveConfig" />
 		</div>
 	</template>
@@ -115,7 +116,7 @@
 				'/vue.min.js'
 			],
 			'service-worker-url': '/upup.sw.min.js',
-			'cache-version': 3
+			'cache-version': 4
 		})
 	</script>
 </body>
