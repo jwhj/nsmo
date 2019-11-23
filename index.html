@@ -94,30 +94,16 @@
 	</template>
 	<template id="SettingsTpl">
 		<div class="frm">
-			<p>我为什么要写UI</p>
+			<p>我不想跟css搏斗了</p>
 			<input v-model.number="config.n" @change="saveConfig" />
 		</div>
 	</template>
 	<script src="index.js"></script>
-	<script src="https://cdn.jsdelivr.net/npm/upup@1.1.0/dist/upup.min.js"></script>
 	<script>
-		UpUp.start({
-			'content-url': '/',
-			'assets': [
-				'/a.css',
-				'/av.min.js',
-				'/favicon.png',
-				'/',
-				'/index.html',
-				'/index.js',
-				'/manifest.json',
-				'/TSCu_Comic.ttf',
-				'/vue-router.min.js',
-				'/vue.min.js'
-			],
-			'service-worker-url': '/upup.sw.min.js',
-			'cache-version': 5
-		})
+		if ('serviceWorker' in navigator)
+			addEventListener('load', () => {
+				navigator.serviceWorker.register('/sw.js')
+			})
 	</script>
 </body>
 
